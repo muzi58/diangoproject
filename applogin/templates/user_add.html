@@ -1,0 +1,76 @@
+{% extends 'test.html' %}
+
+{% load static %}
+
+
+    {% block css %}
+        <link rel="stylesheet"
+              href="{% static 'plugins/bootstrap-datetimepicker-master/css/bootstrap-datetimepicker.min.css' %}">
+
+
+    {% endblock %}
+{% block content %}
+    <div>
+        <div class="container">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">添加用户</h3>
+                </div>
+                <div class="panel-body">
+
+                    <form method="post">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label> 姓名 </label>
+                            <input type="text" class="form-control" name="user" placeholder="姓名">
+                            <label> 密码 </label>
+                            <input type="text" class="form-control" name="pwd" placeholder="密码">
+                            <label> 年龄 </label>
+                            <input type="text" class="form-control" name="age" placeholder="年龄">
+                            <label> 收入 </label>
+                            <input type="text" class="form-control" name="acc" placeholder="收入">
+                            <label> 入职时间 </label>
+                            <input id="dt"autocomplete="false" data-provide="datepicker" type="text" class="form-control"
+                                   name="ctime" placeholder="入职时间">
+
+
+                            <label> 性别 </label>
+                            <select class="form-control" name="sex">
+                                {% for obj in gender_choice %}
+                                    <option value="{{ obj.0 }}">{{ obj.1 }}</option>
+                                {% endfor %}
+                            </select>
+
+                            <label> 部门 </label>
+                            <select class="form-control" name="dep">
+                                {% for obj in depart_list %}
+                                    <option value="{{ obj.id }}">{{ obj.tittle }}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-success">保存</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+
+
+{% endblock %}
+{% block js %}
+    <script src="{% static 'plugins/bootstrap-datetimepicker-master/js/bootstrap-datetimepicker.min.js' %}"></script>
+    <script src="{% static 'plugins/bootstrap-datetimepicker-master/js/locales/bootstrap-datetimepicker.zh-CN.js' %}"></script>
+    <script>
+    $(function(){
+        $('#dt').datetimepicker({
+            format:'yyyy-mm-dd',
+            startDate:'0',
+            language:'zh-CN',
+            autoclose:true
+
+        })
+    })
+    </script>
+{% endblock %}
