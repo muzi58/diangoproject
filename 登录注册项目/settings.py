@@ -48,8 +48,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'applogin.middleware.auth.M1',
-    'applogin.middleware.auth.M2',
+    'applogin.middleware.auth.AutoMiddleware',
+
 ]
 
 ROOT_URLCONF = '登录注册项目.urls'

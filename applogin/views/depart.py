@@ -7,6 +7,10 @@ from applogin.utils.pagination import Pagination
 # Create your views here.
 
 def depart_list(request):
+    info = request.session.get("info")
+    if not info:
+        return redirect('/login/')
+
     queryset = models.Department.objects.all()
     page_object = Pagination(request, queryset)
     context = {

@@ -1,26 +1,19 @@
 from django.middleware.common import CommonMiddleware
+from django.utils.deprecation import MiddlewareMixin
+from django.shortcuts import HttpResponse, redirect, render
 
 
-class M1(CommonMiddleware):
+class AutoMiddleware(MiddlewareMixin):
     """中间件1"""
-    # 如果没有返回值（返回None），继续往后走
-    # 如果有返回值 HttpResponse 、render 、redirect
 
     def process_request(self, request):
-        print("M1.entering")
 
-    def process_response(self, request, response):
-        print("M1.went")
-        return response
+        if request.path_info in ['/login/', '/image/code/']:
+            return
 
+        info_dict = request.session.get("info")
 
-class M2(CommonMiddleware):
-    """中间件2"""
-
-    def process_request(self, request):
-        print("M2.entering")
-
-    def process_response(self, request, response):
-        print("M2.went")
-        return response
-
+        # 判断用户是否登录过
+        if info_dict:
+            return
+        return redirect('/login/')

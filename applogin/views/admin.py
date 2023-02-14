@@ -8,7 +8,11 @@ from applogin.utils.encrypt import md5
 
 
 def admin_list(request):
-    # 构建搜索
+    info = request.session.get("info")
+    if not info:
+        return redirect('/login/')
+
+        # 构建搜索
     data_dict = {}
     search_data = request.GET.get('q', "")
     if search_data:

@@ -8,6 +8,10 @@ from applogin.utils.forms import UserModelForm
 
 
 def user_list(request):
+    info = request.session.get("info")
+    if not info:
+        return redirect('/login/')
+
     # insert into applogin_userinfo(name, password, age, accent, create_time, gender, depart_id) values()
     queryset = models.Userinfo.objects.all()
     page_object = Pagination(request, queryset)
@@ -19,6 +23,10 @@ def user_list(request):
 
 
 def user_add(request):
+    info = request.session.get("info")
+    if not info:
+        return redirect('/login/')
+
     if request.method == 'GET':
         context = {
             "gender_choice": models.Userinfo.gender_choice,
@@ -39,6 +47,10 @@ def user_add(request):
 
 
 def user_modelform_add(request):
+    info = request.session.get("info")
+    if not info:
+        return redirect('/login/')
+
     if request.method == 'GET':
         form = UserModelForm()
         return render(request, 'user_modelform.html', {"form": form})
@@ -52,6 +64,10 @@ def user_modelform_add(request):
 
 
 def user_edit(request, nid):
+    info = request.session.get("info")
+    if not info:
+        return redirect('/login/')
+
     row_object = models.Userinfo.objects.filter(id=nid).first()
     if request.method == 'GET':
         form = UserModelForm(instance=row_object)
@@ -65,5 +81,9 @@ def user_edit(request, nid):
 
 
 def user_del(request, nid):
+    info = request.session.get("info")
+    if not info:
+        return redirect('/login/')
+
     models.Userinfo.objects.filter(id=nid).delete()
     return redirect('/user/list/')

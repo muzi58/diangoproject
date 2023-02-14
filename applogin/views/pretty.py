@@ -8,6 +8,10 @@ from applogin.utils.forms import PrettyModelform, PrettyEditModelform
 
 
 def pretty_list(request):
+    info = request.session.get("info")
+    if not info:
+        return redirect('/login/')
+
     data_dict = {}
     search_data = request.GET.get('que', "")
     if search_data:
@@ -26,6 +30,10 @@ def pretty_list(request):
 
 
 def pretty_add(request):
+    info = request.session.get("info")
+    if not info:
+        return redirect('/login/')
+
     if request.method == 'GET':
         form = PrettyModelform()
         return render(request, 'pretty_add.html', {"form": form})
@@ -38,6 +46,10 @@ def pretty_add(request):
 
 
 def pretty_edit(request, nid):
+    info = request.session.get("info")
+    if not info:
+        return redirect('/login/')
+
     row_object = models.Prettynum.objects.filter(id=nid).first()
     if request.method == 'GET':
         form = PrettyEditModelform(instance=row_object)
@@ -51,6 +63,10 @@ def pretty_edit(request, nid):
 
 
 def pretty_del(request, nid):
+    info = request.session.get("info")
+    if not info:
+        return redirect('/login/')
+
     models.Prettynum.objects.filter(id=nid).delete()
     return redirect('/pretty/list/')
 
